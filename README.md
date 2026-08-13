@@ -31,6 +31,13 @@ docker compose run --rm app --limit=25
 docker compose run --rm app --json
 ```
 
+Preview or explicitly create missing tracezilla SKUs:
+
+```bash
+docker compose run --rm --entrypoint create-tracezilla-skus app --limit=10
+docker compose run --rm --entrypoint create-tracezilla-skus app --execute --confirm --limit=1
+```
+
 The complete catalogs are always compared. `--limit` controls only the maximum
 rows displayed from each result category and defaults to 10. JSON contains the
 complete result arrays.

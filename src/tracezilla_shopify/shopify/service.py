@@ -15,7 +15,10 @@ class ShopifyCatalogService:
         self.mapper = mapper
 
     def read(self) -> list[CatalogItem]:
-        items: list[CatalogItem] = []
+        return [item for value in self.read_variants() if (item := self.mapper.map(value))]
+
+    def read_variants(self) -> list[dict[str, Any]]:
+        items: list[dict[str, Any]] = []
         after: str | None = None
         while True:
             payload = self.client.graphql(GET_PRODUCT_VARIANTS, {"first": 250, "after": after})
@@ -24,9 +27,8 @@ class ShopifyCatalogService:
             if not isinstance(connection, dict) or not isinstance(connection.get("nodes"), list):
                 raise ValueError("Shopify response is missing productVariants.")
             for value in connection["nodes"]:
-                item = self.mapper.map(value)
-                if item:
-                    items.append(item)
+                if isinstance(value, dict):
+                    items.append(value)
             page_info = connection.get("pageInfo")
             if not isinstance(page_info, dict):
                 raise ValueError("Shopify response is missing pagination data.")

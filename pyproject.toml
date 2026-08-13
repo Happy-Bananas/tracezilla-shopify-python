@@ -17,6 +17,7 @@ dev = [
 
 [project.scripts]
 compare-catalogs = "tracezilla_shopify.cli:main"
+create-tracezilla-skus = "tracezilla_shopify.create_skus_cli:main"
 
 [build-system]
 requires = ["hatchling==1.27.0"]

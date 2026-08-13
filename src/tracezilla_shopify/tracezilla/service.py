@@ -40,3 +40,13 @@ class TracezillaCatalogService:
                 raise ValueError("tracezilla returned the same next page repeatedly.")
             visited.add(fingerprint)
         return items
+
+    def existing_sku_codes(self) -> list[str]:
+        return list(dict.fromkeys(item.sku for item in self.read()))
+
+    def create_sku(self, payload: dict[str, object]) -> dict[str, Any]:
+        post = getattr(self.client, "post", None)
+        if not callable(post): raise TypeError("tracezilla client cannot create SKUs.")
+        result: object = post("skus", payload)
+        if not isinstance(result, dict): raise ValueError("tracezilla returned an invalid response.")
+        return result
