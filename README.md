@@ -49,6 +49,15 @@ docker compose run --rm --entrypoint list-shopify-locations app
 docker compose run --rm --entrypoint list-shopify-locations app --json
 ```
 
+Synchronize inventory with an explicit source and target (dry run by default):
+
+```bash
+docker compose run --rm --entrypoint synchronize-inventory app \
+  --shopify-location=gid://shopify/Location/123 --tracezilla-warehouse=2 --limit=10
+```
+
+Writes additionally require `--execute --confirm`.
+
 ## Tests and type checking
 
 Python does not need to be installed on the host:
