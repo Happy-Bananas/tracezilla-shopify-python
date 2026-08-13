@@ -42,6 +42,13 @@ The complete catalogs are always compared. `--limit` controls only the maximum
 rows displayed from each result category and defaults to 10. JSON contains the
 complete result arrays.
 
+List all Shopify locations (read-only):
+
+```bash
+docker compose run --rm --entrypoint list-shopify-locations app
+docker compose run --rm --entrypoint list-shopify-locations app --json
+```
+
 ## Tests and type checking
 
 Python does not need to be installed on the host:
